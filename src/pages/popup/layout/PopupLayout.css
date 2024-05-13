@@ -1,0 +1,32 @@
+.popup-layout {
+    width: 380px;
+    height: 100%; /* Adjust height based on your Chrome popup settings */
+}
+
+.popup-header {
+    color: #000;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 添加下方阴影，增加层次感 */
+    background-color: #FFE58F;
+    padding: 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+
+.popup-footer {
+    color: #000;
+    text-align: center;
+    padding: 10px 0;  /* 适当增加 padding 以提供更好的视觉空间 */
+    background-color: #FFE58F;
+    box-shadow: 0 -2px 8px rgba(0,0,0,0.1);  /* 在顶部添加阴影以创建卡片下沉的效果 */
+    border-top: 1px solid #e0e0e0; /* 添加顶部边框以增强分隔感 */
+    height: 60px;
+}
+
+.popup-content {
+    padding: 10px;
+    background: #FFE58F;
+    overflow: auto; /* For scrollable content */
+    height: 460px; /* Minimum height for the content area */
+}
+

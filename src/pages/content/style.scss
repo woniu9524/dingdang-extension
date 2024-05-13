@@ -1,0 +1,82 @@
+@import '@assets/style/theme.scss';
+
+// CSS that can pollute global styles. Use it with caution.
+// If you use ShodowRoot for style pollution, this style will not be applied inside the content script.
+.content-view-style-may-be-not-working {
+  font-size: 30px;
+}
+
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px; /* 宽度如图所示 */
+  background-color: #f0f2f5;
+  height: 100%;
+}
+
+.menu-item {
+  background: none;
+  border: none;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.icon-tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120px / 2) */
+}
+
+.menu-item:hover .icon-tooltip {
+  visibility: visible;
+}
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80px; /* 宽度如图所示 */
+  background-color: #f0f2f5;
+  height: 100%;
+}
+
+.menu-item {
+  background: none;
+  border: none;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.icon-tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (120px / 2) */
+}
+
+.menu-item:hover .icon-tooltip {
+  visibility: visible;
+}
+

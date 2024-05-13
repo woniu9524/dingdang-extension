@@ -1,0 +1,34 @@
+.tab-container {
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgba(255, 244, 229, 0.6);
+    border-radius: 15px;
+    margin: 10px 0;
+}
+
+
+.tab-container button {
+    background-color: inherit;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: 0.3s;
+    border-radius: 15px;
+    color: #555;
+    margin: 5px 5px;
+}
+
+.tab-container button:hover {
+    background-color: #ffcc66;
+}
+
+.tab-container button.active {
+    background: #ffb733;
+}
+
+.tab-content {
+    display: block; /* 切换时显示内容 */
+    padding: 6px 6px;
+    border-top: none;
+}

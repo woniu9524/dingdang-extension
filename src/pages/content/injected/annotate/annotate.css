@@ -1,0 +1,133 @@
+/* 通用样式，用于添加下划线和高亮 */
+.ding-underline {
+    text-decoration: underline;
+}
+
+.ding-highlight {
+    background-color: yellow; /* 设置高亮颜色 */
+}
+
+.ding-bold-text {
+    font-weight: bold;
+}
+
+
+.target-language-annotation {
+    cursor: pointer;
+}
+
+.source-language-annotation {
+    cursor: pointer;
+}
+
+.rt-style {
+    font-size: medium;
+    padding: 0 5px;
+}
+
+.ding-search-hit {
+    color: #287916 !important;
+    background-color: #EEFFE8 !important;
+}
+
+
+.word-card {
+    position: absolute;
+    width: 350px;
+    background: #fffae5; /* 淡黄色背景 */
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    z-index: 1000; /* 确保卡片在顶层 */
+}
+
+.word-card-pronunciation {
+    font-size: 20px;
+    color: #999;
+    cursor: pointer;
+}
+
+
+.word-card-header {
+    background: #ffecb3; /* 淡黄色的更深一点的色调 */
+    color: #333;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.word-card-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.word-card-content {
+    padding: 15px;
+    color: #333; /* 深色文字提高可读性 */
+}
+
+.word-card-english {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.word-card-translation {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.word-card-buttons {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px; /* 为按钮添加间隔 */
+    flex-wrap: wrap;
+}
+
+.word-card-button {
+    padding: 5px 10px;
+    border: 1px solid #ccc; /* 边框增加按钮的辨识度 */
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #fff; /* 按钮使用白色背景 */
+    color: #333; /* 使用深色文字 */
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.word-card-button:hover {
+    background-color: #ffecb3; /* 鼠标悬停时按钮背景变为淡黄色 */
+    color: #333; /* 鼠标悬停时文字颜色保持不变 */
+}
+
+.strange-button {
+    border-color: #e57373;
+}
+
+.difficult-button {
+    border-color: #ffb74d;
+}
+
+.good-button {
+    border-color: #81c784;
+}
+
+.easy-button {
+    border-color: #64b5f6;
+}
+
+.master-button {
+    border-color: #9575cd;
+}
+
+.word-card-example, .word-card-example-translation {
+    margin-top: 5px;
+    font-size: 14px; /* 字体稍小一些 */
+    color: #333;
+    line-height: 1.4; /* 紧凑一些 */
+}
+.word-highlight {
+    color: #ff5722; /* 高亮颜色 */
+}

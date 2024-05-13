@@ -1,0 +1,18 @@
+.custom-button {
+    height: 100%;
+    font-size: 16px;
+    color: #FFE58F;
+    background-color: #8c8c8c;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-button:hover {
+    background-color: #a6a6a6;
+}
+
+.custom-button.active {
+    background-color: #749F82;
+}

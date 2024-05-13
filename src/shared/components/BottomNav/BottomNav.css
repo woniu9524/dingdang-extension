@@ -1,0 +1,27 @@
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: #FFE58F;
+    padding: 10px 0;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: black;  // 默认颜色
+}
+
+.nav-item.active {
+    color: #00755E;  // 选中颜色
+}
+
+.nav-item .anticon {
+    font-size: 18px;
+}
+
+.nav-text {
+    margin-top: 4px;
+    font-size: 12px;
+}
