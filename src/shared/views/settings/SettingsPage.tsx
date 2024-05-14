@@ -1,7 +1,6 @@
 // 引入 React 相关的库和 Hooks
 import React, { useState, useEffect } from 'react';
 // 引入页面和样式文件
-import './SettingsPage.css';
 // 引入高阶组件
 import withSuspense from '@src/shared/hoc/withSuspense';
 import withErrorBoundary from '@src/shared/hoc/withErrorBoundary';
@@ -67,11 +66,6 @@ const SettingPage = () => {
   // 定义初始化设置的函数
   const initSettings = async () => {
     const settings = await settingsManager.loadSettings();
-    // 网站规则设置
-    getCurrentDomain((domain) => {
-      setWebsiteRulesDropdownItems(createWebsiteRulesDropdownItems(domain));
-      setDomain(domain);
-    });
     // 目标语言设置
     if (settings.targetLanguage === 'en') {
       setTargetLanguage('英文');
@@ -91,38 +85,33 @@ const SettingPage = () => {
     setChineseDropdownSelected(featureSettings.annotateSourceLanguageType);
 
     // 根据网站规则和自动开启设置，设置标注的状态
-    let hasHandled = false;
-    const autoOpen = featureSettings.openNewPageAutoToggle;
-    const targetOpen = featureSettings.annotateTargetLanguageToggle;
-    const sourceOpen = featureSettings.annotateSourceLanguageToggle;
+    const domain:string=await getCurrentDomain();
+    setWebsiteRulesDropdownItems(createWebsiteRulesDropdownItems(domain));
+    setDomain(domain);
+
     const rules = featureSettings.websiteRules;
     rules.forEach(rule => {
       if (rule.website === domain) {
+        setWebsiteRuleSelected(rule.rule);
         if (rule.rule === 'alwaysAnnotateEnglish') {
-          handleOpenAnnotate(true, false);
-          hasHandled = true;
+          setAnnotateEnglish(true);
         } else if (rule.rule === 'alwaysAnnotateChinese') {
-          handleOpenAnnotate(false, true);
-          hasHandled = true;
-        } else if (rule.rule === 'neverAnnotateEnglish') {
-          handleOpenAnnotate(false, autoOpen&&sourceOpen);//如果自动开启，且中文标注不受网站规则影响，则中文标注开启
-          hasHandled = true;
-        } else if (rule.rule === 'neverAnnotateChinese') {
-          handleOpenAnnotate(autoOpen&&targetOpen, false);//如果自动开启，且英文标注不受网站规则影响，则英文标注开启
-          hasHandled = true;
+          setAnnotateChinese(true);
         }
+
       }
     });
-    if (autoOpen&&!hasHandled) {
-      setAutoToggle(autoOpen);
-      setAndStoreAnnotateEnglish(targetOpen, false);
-      setAndStoreAnnotateChinese(sourceOpen, false);
+
+    if (featureSettings.openNewPageAutoToggle) {
+      setAutoToggle(true);
+      setAnnotateEnglish(featureSettings.annotateTargetLanguageToggle);
+      setAnnotateChinese(featureSettings.annotateSourceLanguageToggle);
     }
 
   };
 
   // 处理当前页面是否开启注释
-  const handleOpenAnnotate = async (targetOpen: boolean, sourceOpen: boolean) => {
+   const handleOpenAnnotate = async (targetOpen: boolean, sourceOpen: boolean) => {
     const settings = await settingsManager.loadSettings();
     const data: AnnotateConfig = {
       'lazeMode': settings.featureSettings.lazyModeToggle || false,
@@ -135,14 +124,16 @@ const SettingPage = () => {
       'targetLanguage': settings.targetLanguage || '英文',
       'lemmatize': false,
     };
-
     if (targetOpen) {
       sendMessageToContent('settings-annotateTargetLanguage', data);
-    }
-    if (sourceOpen) {
+    }else if(sourceOpen) {
       data.annotateType = settings.featureSettings.annotateSourceLanguageType;
       sendMessageToContent('settings-annotateSourceLanguage', data);
+    }else{
+      // 还原
+      sendMessageToContent('settings-cleanAnnotate', {});
     }
+
   };
 
 

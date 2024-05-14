@@ -1,17 +1,22 @@
 
-export function getCurrentDomain(callback) {
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    console.log('tabs', tabs);
-    const currentTab = tabs[0];
-    if (currentTab) {
-        // 使用 URL 对象解析当前标签页的网址
-        const url = new URL(currentTab.url);
-        // 获取主机名
-        const hostname = url.hostname;
-        callback(hostname);
+export function getCurrentDomain(): Promise<string> {
+  return new Promise((resolve, reject) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      console.log('tabs', tabs);
+      const currentTab = tabs[0];
+      if (currentTab && currentTab.url) {
+        try {
+          const url = new URL(currentTab.url);
+          const hostname = url.hostname;
+          resolve(hostname);
+        } catch (error) {
+          reject(error);
+        }
+      } else {
+        reject(new Error('No active tab found or tab URL is undefined'));
       }
-    },
-  );
+    });
+  });
 }
 
 

@@ -1,70 +1,88 @@
 import React, { useState } from 'react';
 import { ExtensionWord } from '@src/shared/storages/WordsStorage';
-import { List, Button, Collapse, Space } from 'antd';
 import { SearchOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Button, Collapse, List } from 'antd';
+import { findWordInHtml } from '@pages/content/injected/annotate/textProcessUtils';
+
+const { Panel } = Collapse;
 
 interface PageListProps {
   wordList: ExtensionWord[];
 }
 
 const PageList: React.FC<PageListProps> = ({ wordList }) => {
-  const [expandedWord, setExpandedWord] = useState<number | null>(null);
-
-  const handleExpandClick = (index: number) => {
-    setExpandedWord(expandedWord === index ? null : index);
-  };
-
-  const handleAction = (type: string) => {
-    console.log(type);
+  const handleAction = (type: string, index: number, wordList: ExtensionWord[]) => {
+    if (type === 'search') {
+      findWordInHtml(wordList[index].word);
+    }
+    // 添加其他操作逻辑，例如删除单词等
   };
 
   const highlightWords = (text: string): JSX.Element => {
     const parts = text.split(/【|】/).map((part, index) =>
-      index % 2 === 1 ? <span key={index} className="word-highlight">{part}</span> : part
+      index % 2 === 1 ? <span key={index} style={{ color: 'blue', fontWeight: 'bold' }}>{part}</span> : part
     );
     return <>{parts}</>;
   };
 
-  const getItems = (item: ExtensionWord) => ([
-    {
-      key: '1',
-      label: null,
-      children: (
-        <>
+  return (
+    <Collapse accordion>
+      {wordList.map((item, index) => (
+        <Panel
+          key={index}
+          header={
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Button
+                type="text"
+                icon={<SearchOutlined />}
+                onClick={(e) => { e.stopPropagation(); handleAction('search', index, wordList); }}
+              />
+              <span>{item.word}{item.phonetic ? ` (${item.phonetic})` : ''}</span>
+              <Button
+                type="text"
+                icon={<DeleteOutlined />}
+                onClick={(e) => { e.stopPropagation(); handleAction('delete', index, wordList); }}
+              />
+            </div>
+          }
+        >
           <p>{item.translation}</p>
           <p><i>{highlightWords(item.sentence)}</i> - {highlightWords(item.sentenceTranslation)}</p>
-          <Space style={{ marginTop: '10px' }}>
-            <button className="word-card-button strange-button" onClick={() => handleAction('strange')}>陌生</button>
-            <button className="word-card-button difficult-button" onClick={() => handleAction('difficult')}>困难</button>
-            <button className="word-card-button good-button" onClick={() => handleAction('good')}>良好</button>
-            <button className="word-card-button easy-button" onClick={() => handleAction('easy')}>容易</button>
-            <button className="word-card-button master-button" onClick={() => handleAction('master')}>掌握</button>
-          </Space>
-        </>
-      ),
-      showArrow: false,
-    },
-  ]);
-
-  return (
-    <List
-      itemLayout="vertical"
-      dataSource={wordList}
-      renderItem={(item, index) => (
-        <List.Item key={index}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <Button type="text" icon={<SearchOutlined />} />
-            <div style={{ flex: 1, cursor: 'pointer' }} onClick={() => handleExpandClick(index)}>
-              <span>{item.word}{item.phonetic ? ` (${item.phonetic})` : ''}</span>
-            </div>
-            <Button type="text" icon={<DeleteOutlined />} />
+          <div style={{ display: 'flex', justifyContent: 'space-around', marginTop: '10px' }}>
+            <Button
+              style={{ backgroundColor: '#f5222d', color: '#ffffff' }}
+              onClick={() => handleAction('strange', index, wordList)}
+            >
+              陌生
+            </Button>
+            <Button
+              style={{ backgroundColor: '#faad14', color: '#ffffff' }}
+              onClick={() => handleAction('difficult', index, wordList)}
+            >
+              困难
+            </Button>
+            <Button
+              style={{ backgroundColor: '#52c41a', color: '#ffffff' }}
+              onClick={() => handleAction('good', index, wordList)}
+            >
+              良好
+            </Button>
+            <Button
+              style={{ backgroundColor: '#1890ff', color: '#ffffff' }}
+              onClick={() => handleAction('easy', index, wordList)}
+            >
+              容易
+            </Button>
+            <Button
+              style={{ backgroundColor: '#722ed1', color: '#ffffff' }}
+              onClick={() => handleAction('master', index, wordList)}
+            >
+              掌握
+            </Button>
           </div>
-          {expandedWord === index && (
-            <Collapse items={getItems(item)} activeKey={expandedWord === index ? '1' : ''} ghost />
-          )}
-        </List.Item>
-      )}
-    />
+        </Panel>
+      ))}
+    </Collapse>
   );
 };
 

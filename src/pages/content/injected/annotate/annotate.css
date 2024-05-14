@@ -4,8 +4,77 @@
 }
 
 .ding-highlight {
-    background-color: yellow; /* 设置高亮颜色 */
+    background-color: #fff9c4; /* 柔和的黄色 */
+    padding: 1px 2px; /* 为高亮文本添加一些内边距 */
+    border-radius: 4px; /* 圆角 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    transition: background-color 0.3s ease; /* 过渡效果 */
 }
+
+.ding-highlight:hover {
+    background-color: #fff59d; /* 悬停时背景颜色 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 悬停时更明显的阴影效果 */
+}
+
+.ding-search-hit {
+    background-color: #4caf50; /* 鲜艳的绿色 */
+    padding: 1px 2px; /* 为搜索命中文本添加更多内边距 */
+    border-radius: 4px; /* 圆角 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+    transition: background-color 0.3s ease; /* 过渡效果 */
+}
+
+.ding-search-hit:hover {
+    background-color: #388e3c; /* 悬停时更深的绿色 */
+}
+
+
+.custom-drawer {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    border-radius: 8px 0 0 8px;
+    overflow: hidden;
+    transition: right 0.3s ease-in-out;
+}
+
+.custom-drawer.visible {
+    right: 0;
+}
+
+.drawer-content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.custom-menu {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-top: 1px solid #f0f0f0;
+    background-color: #f8f8f8;
+}
+
+.menu-item {
+    text-align: center;
+    flex: 1;
+    cursor: pointer;
+    padding: 10px 0;
+}
+
+.menu-item.active {
+    background-color: #e0e0e0;
+}
+
+.menu-item > div {
+    font-size: 12px;
+}
+
 
 .ding-bold-text {
     font-weight: bold;
@@ -25,10 +94,7 @@
     padding: 0 5px;
 }
 
-.ding-search-hit {
-    color: #287916 !important;
-    background-color: #EEFFE8 !important;
-}
+
 
 
 .word-card {

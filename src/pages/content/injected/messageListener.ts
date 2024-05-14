@@ -5,28 +5,31 @@
 // 将请求类型映射到它们各自的处理函数
 import {
   handleSourceLanguageAnnotate,
-  handleTargetLanguageAnnotate,
+  handleTargetLanguageAnnotate, resetAnnotations,
 } from '@pages/content/injected/annotate/textProcessor';
 import { findWordInHtml } from '@pages/content/injected/annotate/textProcessUtils';
 import { handleMessage } from '@src/shared/utils/MessagingTool';
+import wordsStorage from '@src/shared/storages/WordsStorage';
 
 const requestHandlers = {
   'settings-annotateTargetLanguage': async (data) => {
-    console.log('settings-annotateTargetLanguage', data);
     // 标注英文
     await handleTargetLanguageAnnotate(data);
     return {};
   },
   'settings-annotateSourceLanguage': async (data) => {
     // 标注中文
-    console.log('settings-annotateSourceLanguage', data);
     await handleSourceLanguageAnnotate(data);
     return {};
   },
-
   'findWord': async (data) => {
     // 标注中文
     findWordInHtml(data);
+    return {};
+  },
+  'settings-cleanAnnotate': () => {
+    // 清除标注
+    resetAnnotations();
     return {};
   },
 };

@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client';
 // 引入 App 组件，这是我们的主要 UI 组件
 // 引入一个用于在特定条件下自动刷新页面的模块，以保证最新的内容被展示
 import refreshOnUpdate from 'virtual:reload-on-update-in-view';
+
 // 引入样式文件，这里使用了特殊的查询参数 `?inline` 来直接将样式内容注入到 JavaScript 中
 import injectedStyle from './injected.css?inline';
-
 import ContentWordCard from '@src/shared/components/ConentWordCard/ContentWordCard';
 import { ExtensionWord } from '@src/shared/storages/WordsStorage';
 import DrawerSidebar from '@src/shared/views/sidebar/DrawerSidebar';
@@ -65,20 +65,19 @@ export async function createPageHandle(wordList: ExtensionWord[]) {
   }
 }
 
-export function showWordCard(extendWord:ExtensionWord, x, y) {
+export function showWordCard(extendWord:ExtensionWord,lazyMode, x, y) {
   const cardRoot = document.createElement('div');
   document.body.appendChild(cardRoot);
   // 设置基础样式
   cardRoot.style.position = 'absolute';
   cardRoot.style.left = `${x}px`;
   cardRoot.style.zIndex = '1000'; // 确保组件在最上层
-
   // 创建根节点并暂时渲染WordCard组件
   const root = createRoot(cardRoot);
   root.render(
     <ContentWordCard
       word={extendWord.word}
-      translation={extendWord.translation}
+      translation={lazyMode ? extendWord.lazyTranslation : extendWord.translation}
       example={extendWord.sentence}
       exampleTranslation={extendWord.sentenceTranslation}
       onClose={() => {

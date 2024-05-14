@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Drawer, Menu } from 'antd';
 import {
   SettingOutlined,
   BookOutlined,
@@ -7,9 +6,12 @@ import {
   BarChartOutlined,
   UnorderedListOutlined,
   InfoCircleOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
+import { Drawer } from 'antd';
 import { ExtensionWord } from '@src/shared/storages/WordsStorage';
 import PageList from '@src/shared/components/PageList/PageList';
+import SettingsPage from '@src/shared/views/settings/SettingsPage';
 
 type RightSideDrawerProps = {
   visible: boolean;
@@ -23,7 +25,7 @@ const RightSideDrawer: React.FC<RightSideDrawerProps> = ({ visible, wordList, on
   const renderContent = () => {
     switch (activeMenu) {
       case 'settings':
-        return <div>Settings Content</div>;
+        return <SettingsPage />;
       case 'wordbook':
         return <div>Word Book Content</div>;
       case 'history':
@@ -41,32 +43,88 @@ const RightSideDrawer: React.FC<RightSideDrawerProps> = ({ visible, wordList, on
 
   return (
     <Drawer
+      title="DingDuang"
       placement="right"
-      closable={true}
       onClose={onClose}
       visible={visible}
       width={400}
-      bodyStyle={{ padding: 0, borderRadius: '8px 0 0 8px' }}
+      closeIcon={<CloseOutlined />}
       mask={false}
-      style={{ overflow: 'hidden' }} // 解决圆角问题
+      bodyStyle={{ padding: 0, height: '100%', display: 'flex', flexDirection: 'column' }}
+      drawerStyle={{
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        backdropFilter: 'blur(10px)',
+        borderRadius: '16px 0 0 16px',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
+      headerStyle={{
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.3)',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+      }}
     >
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-        <div style={{ flex: 1, padding: '20px', overflowY: 'auto' }}>
-          {renderContent()}
-        </div>
-        <Menu
-          mode="horizontal"
-          selectedKeys={[activeMenu]}
-          onClick={({ key }) => setActiveMenu(key)}
-          style={{ textAlign: 'center', borderTop: '1px solid #f0f0f0' }}
+      <div style={{ flex: 1, overflowY: 'auto' }}>
+        {renderContent()}
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          padding: '10px 0',
+          borderTop: '1px solid rgba(255, 255, 255, 0.3)',
+          backgroundColor: 'rgba(255, 255, 255, 0.3)',
+          backdropFilter: 'blur(10px)',
+          position: 'sticky',
+          bottom: 0,
+        }}
+      >
+        <div
+          style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}
+          onClick={() => setActiveMenu('settings')}
         >
-          <Menu.Item key="settings" icon={<SettingOutlined style={{ fontSize: '24px' }} />} title="设置" />
-          <Menu.Item key="wordbook" icon={<BookOutlined style={{ fontSize: '24px' }} />} title="词书" />
-          <Menu.Item key="history" icon={<HistoryOutlined style={{ fontSize: '24px' }} />} title="历史" />
-          <Menu.Item key="statistics" icon={<BarChartOutlined style={{ fontSize: '24px' }} />} title="统计" />
-          <Menu.Item key="list" icon={<UnorderedListOutlined style={{ fontSize: '24px' }} />} title="清单" />
-          <Menu.Item key="info" icon={<InfoCircleOutlined style={{ fontSize: '24px' }} />} title="说明" />
-        </Menu>
+          <SettingOutlined style={{ fontSize: '24px' }} />
+          <div>设置</div>
+        </div>
+        <div
+          style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}
+          onClick={() => setActiveMenu('wordbook')}
+        >
+          <BookOutlined style={{ fontSize: '24px' }} />
+          <div>词书</div>
+        </div>
+        <div
+          style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}
+          onClick={() => setActiveMenu('history')}
+        >
+          <HistoryOutlined style={{ fontSize: '24px' }} />
+          <div>历史</div>
+        </div>
+        <div
+          style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}
+          onClick={() => setActiveMenu('statistics')}
+        >
+          <BarChartOutlined style={{ fontSize: '24px' }} />
+          <div>统计</div>
+        </div>
+        <div
+          style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}
+          onClick={() => setActiveMenu('list')}
+        >
+          <UnorderedListOutlined style={{ fontSize: '24px' }} />
+          <div>清单</div>
+        </div>
+        <div
+          style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}
+          onClick={() => setActiveMenu('info')}
+        >
+          <InfoCircleOutlined style={{ fontSize: '24px' }} />
+          <div>说明</div>
+        </div>
       </div>
     </Drawer>
   );

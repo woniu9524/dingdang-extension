@@ -1,5 +1,9 @@
 import reloadOnUpdate from 'virtual:reload-on-update-in-background-script';
 import 'webextension-polyfill';
+import { getCurrentDomain } from '@src/shared/utils/ChromExtendTool';
+import { settingsManager } from '@src/shared/storages/SettingsManager';
+import { AnnotateConfig } from '@pages/content/injected/annotate/textProcessor';
+import { sendMessageToContent } from '@src/shared/utils/MessagingTool';
 
 reloadOnUpdate('pages/background');
 
@@ -9,20 +13,64 @@ reloadOnUpdate('pages/background');
  */
 reloadOnUpdate('pages/content/style.scss');
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  switch (request.type) {
-    case 'GET_STATE':
-      break;
-    case 'UPDATE_WORD_LIST':
-      sendResponse({ success: true });
-      break;
-    case 'SET_MENU':
-      sendResponse({ success: true });
-      break;
-    case 'SET_HAS_OPEN_SIDE':
-      sendResponse({ success: true });
-      break;
-    default:
-      sendResponse({ success: false, message: 'Unknown action' });
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete' && tab.active) {
+    // 获取当前标签页的 URL
+
+    getCurrentDomain().then((domain) => {
+      settingsManager.loadSettings().then((settings) => {
+        const featureSettings = settings.featureSettings;
+        let hasHandled = false;
+        const autoOpen = featureSettings.openNewPageAutoToggle;
+        const targetOpen = featureSettings.annotateTargetLanguageToggle;
+        const sourceOpen = featureSettings.annotateSourceLanguageToggle;
+        const rules = featureSettings.websiteRules;
+        rules.forEach(rule => {
+          if (rule.website === domain) {
+            if (rule.rule === 'alwaysAnnotateEnglish') {
+              handleOpenAnnotate(true, false);
+              hasHandled = true;
+            } else if (rule.rule === 'alwaysAnnotateChinese') {
+              handleOpenAnnotate(false, true);
+              hasHandled = true;
+            } else if (rule.rule === 'neverAnnotateEnglish') {
+              handleOpenAnnotate(false, autoOpen && sourceOpen);//如果自动开启，且中文标注不受网站规则影响，则中文标注开启
+              hasHandled = true;
+            } else if (rule.rule === 'neverAnnotateChinese') {
+              handleOpenAnnotate(autoOpen && targetOpen, false);//如果自动开启，且英文标注不受网站规则影响，则英文标注开启
+              hasHandled = true;
+            }
+          }
+        });
+        if (autoOpen && !hasHandled) {
+          handleOpenAnnotate(targetOpen, sourceOpen);
+        }
+      });
+    });
+
   }
 });
+
+
+const handleOpenAnnotate = async (targetOpen: boolean, sourceOpen: boolean) => {
+  const settings = await settingsManager.loadSettings();
+  const data: AnnotateConfig = {
+    'lazeMode': settings.featureSettings.lazyModeToggle || false,
+    'annotateType': settings.featureSettings.annotateTargetLanguageType,
+    'annotateFrequency': settings.featureSettings.annotateFrequency || 50,
+    'useUnderline': settings.featureSettings.useUnderline || false,
+    'useTextHighlight': settings.featureSettings.useTextHighlight || false,
+    'useBold': settings.featureSettings.useBold || false,
+    'sourceLanguage': settings.sourceLanguage || '中文',
+    'targetLanguage': settings.targetLanguage || '英文',
+    'lemmatize': false,
+  };
+  if (targetOpen) {
+    sendMessageToContent('settings-annotateTargetLanguage', data);
+  }
+  if (sourceOpen) {
+    data.annotateType = settings.featureSettings.annotateSourceLanguageType;
+    sendMessageToContent('settings-annotateSourceLanguage', data);
+  }
+};
