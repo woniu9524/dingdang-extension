@@ -17,7 +17,7 @@ const TopNavBar = () => {
           <h1 className="title">DingDuang</h1>
         </Col>
         <Col>
-          <Tabs onTabChange={handleTabChange} />
+          <Tabs />
         </Col>
       </Row>
     </div>
