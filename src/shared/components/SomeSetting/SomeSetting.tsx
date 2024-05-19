@@ -110,7 +110,7 @@ const SwitchCard: React.FC<SwitchCardProps> = ({ isOn, description, onToggle }) 
       <input type="checkbox" checked={isOn} onChange={onToggle} />
       <span className="slider"></span>
     </Switch>
-    <Description>{description}</Description>
+    <Description className={"processed-dingdang-never"}>{description}</Description>
   </InnerCard>
 );
 
@@ -129,7 +129,7 @@ const SwitchCardWithDropdown: React.FC<SwitchCardWithDropdownProps> = ({
       <span className="slider"></span>
     </Switch>
     <Description>{description}</Description>
-    <Dropdown value={selectedValue} onChange={onDropdownChange}>
+    <Dropdown value={selectedValue} onChange={onDropdownChange} className={"processed-dingdang-never"}>
       {dropdownItems.map((item, index) => (
         <option key={index} value={item.key} style={{ color: item.color }}>
           {item.content}
@@ -145,9 +145,9 @@ const CardWithDropdown: React.FC<CardWithDropdownProps> = ({
   onDropdownChange, // 新增参数，用于处理下拉菜单的变化
 }) => (
   <InnerCard>
-    <Dropdown value={selectedValue} onChange={onDropdownChange}>
+    <Dropdown value={selectedValue} onChange={onDropdownChange} className={"processed-dingdang-never"}>
       {dropdownItems.map((item, index) => (
-        <option key={index} value={item.key} style={{ color: item.color }}>
+        <option key={index} value={item.key} style={{ color: item.color }} className={"processed-dingdang-never"}>
           {item.content}
         </option>
       ))}

@@ -51,12 +51,23 @@ const useExtensionApi = () => {
     }
   };
 
+  // 对单词打分
+  const rateWord = (word: string, score: number): Promise<ResponseData> => {
+    try {
+      return axios.get(`v1/wordbook/score?word=${word}&grade=${score}`);
+    } catch (error) {
+      console.error('打分单词失败:', error);
+      throw error; // 或者处理错误
+    }
+  }
+
   return {
     getWordBooks,
     getScanResult,
     usWordBook,
     stopUseWordBook,
     getWordList,
+    rateWord,
   };
 };
 

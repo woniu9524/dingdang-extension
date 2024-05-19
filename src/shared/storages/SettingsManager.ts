@@ -19,6 +19,7 @@ export interface UserSettings {
   targetLanguage: string;
   hasInitChoose: boolean;
   token: string;
+  openMode: string;
   featureSettings: FeatureSettings;
 }
 
@@ -32,17 +33,18 @@ class SettingsManager {
       targetLanguage: 'en',
       hasInitChoose: false,
       token: '',
+      openMode:'popupMode',
       featureSettings: {
         openNewPageAutoToggle: false,
         lazyModeToggle: false,
         annotateTargetLanguageToggle: false,
         annotateTargetLanguageType: '',
         annotateSourceLanguageToggle: false,
-        annotateSourceLanguageType: '',
+        annotateSourceLanguageType: 'topEnglish',
         websiteRules: [],
         useUnderline: false,
-        useTextHighlight: false,
-        annotateFrequency: 0,
+        useTextHighlight: true,
+        annotateFrequency: 80,
         useBold: false,
       },
     };

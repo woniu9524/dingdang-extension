@@ -56,7 +56,8 @@ export async function handleAnnotate(settings: AnnotateConfig, isTargetLanguage:
     const translation = translations[Math.floor(Math.random() * translations.length)];
     const extensionWord = extensionWords[isTargetLanguage ? word : translation] || {};
     if (!translation) return word;
-    if (Math.random() * 100 < settings.annotateFrequency) {
+    const flag=Math.random() * 100 < settings.annotateFrequency;
+    if (flag) {
       if (!wordAdded[word]) {
         wordList.push(extensionWord);
         wordAdded[word] = true;

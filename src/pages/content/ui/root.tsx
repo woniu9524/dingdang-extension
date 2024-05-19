@@ -9,6 +9,7 @@ import injectedStyle from './injected.css?inline';
 import ContentWordCard from '@src/shared/components/ConentWordCard/ContentWordCard';
 import { ExtensionWord } from '@src/shared/storages/WordsStorage';
 import DrawerSidebar from '@src/shared/views/sidebar/DrawerSidebar';
+import ContentWordCardMobile from '@src/shared/components/ConentWordCard/ContentWordCardMobile';
 // 调用 refreshOnUpdate 函数，当 'pages/content' 页面的内容发生变化时，自动刷新页面
 refreshOnUpdate('pages/content');
 
@@ -49,7 +50,7 @@ shadowRoot.appendChild(styleElement);
 //createRoot(rootIntoShadow).render(<BackButton />);
 
 
-export async function createPageHandle(wordList: ExtensionWord[]) {
+export async function createPageHandle(wordList: ExtensionWord[],openDrawer:boolean=false) {
   const existingRoot = document.getElementById('dingdang-handle-root');
   if (existingRoot) {
     existingRoot.remove();
@@ -61,36 +62,56 @@ export async function createPageHandle(wordList: ExtensionWord[]) {
     const shadowRoot = root.attachShadow({ mode: 'open' });
     const rootIntoShadow = document.createElement('div');
     shadowRoot.appendChild(rootIntoShadow);
-    createRoot(rootIntoShadow).render(<DrawerSidebar wordList={wordList} />);
+    createRoot(rootIntoShadow).render(<DrawerSidebar wordList={wordList} openDrawer={openDrawer} />);
   }
 }
 
-export function showWordCard(extendWord:ExtensionWord,lazyMode, x, y) {
+export function showWordCard(extendWord: ExtensionWord, lazyMode: boolean, x: number, y: number) {
   const cardRoot = document.createElement('div');
   document.body.appendChild(cardRoot);
+
   // 设置基础样式
   cardRoot.style.position = 'absolute';
-  cardRoot.style.left = `${x}px`;
   cardRoot.style.zIndex = '1000'; // 确保组件在最上层
-  // 创建根节点并暂时渲染WordCard组件
+
+  const isMobile = window.innerWidth <= 768; // 设定手机屏幕的宽度阈值
+
+  if (!isMobile) {
+    cardRoot.style.left = `${x}px`;
+  } else {
+    cardRoot.style.left = '50%';
+    cardRoot.style.transform = 'translateX(-50%)'; // 水平居中
+  }
+
+  // 创建根节点并渲染对应组件
   const root = createRoot(cardRoot);
   root.render(
-    <ContentWordCard
-      word={extendWord.word}
-      translation={lazyMode ? extendWord.lazyTranslation : extendWord.translation}
-      example={extendWord.sentence}
-      exampleTranslation={extendWord.sentenceTranslation}
-      onClose={() => {
-        root.unmount();
-        document.body.removeChild(cardRoot);
-      }}
-    />,
+    isMobile ?
+      <ContentWordCardMobile
+        word={extendWord.word}
+        translation={extendWord.translation}
+        example={extendWord.sentence}
+        exampleTranslation={extendWord.sentenceTranslation}
+        onClose={() => {
+          root.unmount();
+          document.body.removeChild(cardRoot);
+        }}
+      /> :
+      <ContentWordCard
+        word={extendWord.word}
+        translation={extendWord.translation}
+        example={extendWord.sentence}
+        exampleTranslation={extendWord.sentenceTranslation}
+        onClose={() => {
+          root.unmount();
+          document.body.removeChild(cardRoot);
+        }}
+      />
   );
 
-  // 等待组件渲染完成后，调整top值以确保组件显示在单词下方
+  // 等待组件渲染完成后，调整top值
   setTimeout(() => {
-    //const cardHeight = cardRoot.offsetHeight;
     const scrollY = window.scrollY || window.pageYOffset;
-    cardRoot.style.top = `${y + scrollY}px`; // 考虑页面滚动偏移
+    cardRoot.style.top = isMobile ? `${scrollY}px` : `${y + scrollY}px`; // 手机顶部弹出，PC在单词下方
   }, 0);
 }

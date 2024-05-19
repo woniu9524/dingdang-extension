@@ -9,7 +9,7 @@ import {
 } from '@pages/content/injected/annotate/textProcessor';
 import { findWordInHtml } from '@pages/content/injected/annotate/textProcessUtils';
 import { handleMessage } from '@src/shared/utils/MessagingTool';
-import wordsStorage from '@src/shared/storages/WordsStorage';
+import { createPageHandle } from '@pages/content/ui/root';
 
 const requestHandlers = {
   'settings-annotateTargetLanguage': async (data) => {
@@ -30,6 +30,15 @@ const requestHandlers = {
   'settings-cleanAnnotate': () => {
     // 清除标注
     resetAnnotations();
+    return {};
+  },
+  'settings-openSidebar': () => {
+    // 打开侧边栏
+    try {
+      createPageHandle([], true)
+    }catch (e){
+      console.log(e)
+    }
     return {};
   },
 };

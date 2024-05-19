@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { CloseOutlined, SoundOutlined } from '@ant-design/icons';
+import useExtensionApi from '@src/shared/hooks/useExtensionApi';
+import wordsStorage from '@src/shared/storages/WordsStorage';
 
 interface ContentWordCardProps {
   word: string;
@@ -11,6 +13,8 @@ interface ContentWordCardProps {
 
 const ContentWordCard: React.FC<ContentWordCardProps> = ({ word, translation, example, exampleTranslation, onClose }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const { rateWord } = useExtensionApi();
+
 
   // 使用浏览器自带的发音
   const handlePronunciation = () => {
@@ -40,8 +44,14 @@ const ContentWordCard: React.FC<ContentWordCardProps> = ({ word, translation, ex
   }, [onClose]); // 依赖于onClose函数
 
   // 处理用户对单词的操作
-  const handleAction = (action: string) => {
-    console.log(`用户对单词${word}执行了${action}操作`);
+  const handleAction = (grade: number) => {
+    rateWord(word, grade).then(r => {
+      // 关闭卡片
+      onClose();
+    })
+    if (grade === 5){
+      wordsStorage.addStopWord(word)
+    }
   };
 
   const highlightWords = (text: string): JSX.Element => {
@@ -67,11 +77,11 @@ const ContentWordCard: React.FC<ContentWordCardProps> = ({ word, translation, ex
         {exampleTranslation && <div className="word-card-example-translation">{highlightWords(exampleTranslation)}</div>}
       </div>
       <div className="word-card-buttons">
-        <button className="word-card-button strange-button" onClick={() => handleAction('strange')}>陌生</button>
-        <button className="word-card-button difficult-button" onClick={() => handleAction('difficult')}>困难</button>
-        <button className="word-card-button good-button" onClick={() => handleAction('good')}>良好</button>
-        <button className="word-card-button easy-button" onClick={() => handleAction('easy')}>容易</button>
-        <button className="word-card-button master-button" onClick={() => handleAction('master')}>掌握</button>
+        <button className="word-card-button strange-button" onClick={() => handleAction(1)}>陌生</button>
+        <button className="word-card-button difficult-button" onClick={() => handleAction(2)}>困难</button>
+        <button className="word-card-button good-button" onClick={() => handleAction(3)}>良好</button>
+        <button className="word-card-button easy-button" onClick={() => handleAction(4)}>容易</button>
+        <button className="word-card-button master-button" onClick={() => handleAction(5)}>掌握</button>
       </div>
     </div>
   );

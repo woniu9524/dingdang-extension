@@ -1,6 +1,5 @@
 import React from 'react';
 import { Card, Button } from 'antd';
-import './WordBookCard.css';
 
 interface WordBookCardProps {
   bookNo: number;
@@ -12,13 +11,13 @@ interface WordBookCardProps {
 }
 
 const WordBookCard: React.FC<WordBookCardProps> = ({
-  bookNo,
-  bookName,
-  masteredCount,
-  totalCount,
-  isActive,
-  toggleActive,
-}) => {
+                                                     bookNo,
+                                                     bookName,
+                                                     masteredCount,
+                                                     totalCount,
+                                                     isActive,
+                                                     toggleActive,
+                                                   }) => {
   return (
     <Card
       style={{
@@ -30,9 +29,9 @@ const WordBookCard: React.FC<WordBookCardProps> = ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'stretch',
-        overflow: 'hidden', // 保证所有内容都在圆角内部
+        overflow: 'hidden',
       }}
-      bodyStyle={{ padding: '0', display: 'flex', flexGrow: 1 }} // 移除padding，确保内容填满
+      bodyStyle={{ padding: '0', display: 'flex', flexGrow: 1 }}
     >
       <div
         style={{ flex: 1, padding: '10px 20px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -42,14 +41,24 @@ const WordBookCard: React.FC<WordBookCardProps> = ({
         </p>
       </div>
       <Button
-        className={isActive ? 'custom-button active' : 'custom-button'}
         onClick={toggleActive}
         style={{
+          height: '100%',
+          fontSize: '16px',
+          color: '#FFE58F',
+          backgroundColor: isActive ? '#749F82' : '#8c8c8c',
+          transition: 'background-color 0.3s',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
           width: '20%',
           border: 'none',
           borderRadius: 0,
           margin: 0,
-        }}>
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#a6a6a6'}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = isActive ? '#749F82' : '#8c8c8c'}
+      >
         {isActive ? '停用' : '使用'}
       </Button>
     </Card>

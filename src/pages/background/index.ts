@@ -74,3 +74,16 @@ const handleOpenAnnotate = async (targetOpen: boolean, sourceOpen: boolean) => {
     sendMessageToContent('settings-annotateSourceLanguage', data);
   }
 };
+
+chrome.action.onClicked.addListener(() => {
+  settingsManager.loadSettings().then((settings) => {
+    const openMode = settings.openMode;
+    if (openMode === 'sidebarMode'){
+        sendMessageToContent('settings-openSidebar',{})
+    }else{
+      console.log('popupMode');
+      chrome.action.setPopup({ popup: "src/pages/popup/index.html" })
+      chrome.action.openPopup();
+    }
+  })
+});

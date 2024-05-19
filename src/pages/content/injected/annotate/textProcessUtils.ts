@@ -12,7 +12,7 @@ type TextNodeCallback = (node: Text) => void;
 export function walkTextNodes(node: Node, callback: TextNodeCallback): void {
   if (node.nodeType === Node.TEXT_NODE) {
     // 如果当前文本节点的父元素没有包含 'processed-dingdang' 类名，才执行回调函数
-    if (!node.parentElement || !node.parentElement.classList.contains('processed-dingdang')) {
+    if (!node.parentElement || !node.parentElement.classList.contains('processed-dingdang')|| !node.parentElement.classList.contains('processed-dingdang-never')) {
       callback(node as Text);
     }
   } else {

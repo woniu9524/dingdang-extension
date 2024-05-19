@@ -16,11 +16,16 @@ import {
 } from '@src/shared/components/SomeSetting/SomeSetting';
 import { FeatureSettings, settingsManager } from '@src/shared/storages/SettingsManager';
 import { getCurrentDomain } from '@src/shared/utils/ChromExtendTool';
-import { AnnotateConfig } from '@pages/content/injected/annotate/textProcessor';
+import {
+  AnnotateConfig,
+  handleSourceLanguageAnnotate, handleTargetLanguageAnnotate,
+  resetAnnotations,
+} from '@pages/content/injected/annotate/textProcessor';
 import { sendMessageToContent } from '@src/shared/utils/MessagingTool';
 
 // 设置页面的主要组件
 const SettingPage = () => {
+
   // 语言
   const [targetLanguage, setTargetLanguage] = useState('英文');
   const [sourceLanguage] = useState('中文');
@@ -85,7 +90,7 @@ const SettingPage = () => {
     setChineseDropdownSelected(featureSettings.annotateSourceLanguageType);
 
     // 根据网站规则和自动开启设置，设置标注的状态
-    const domain:string=await getCurrentDomain();
+    const domain:string=window.location.hostname;
     setWebsiteRulesDropdownItems(createWebsiteRulesDropdownItems(domain));
     setDomain(domain);
 
@@ -111,7 +116,7 @@ const SettingPage = () => {
   };
 
   // 处理当前页面是否开启注释
-   const handleOpenAnnotate = async (targetOpen: boolean, sourceOpen: boolean) => {
+  const handleOpenAnnotate = async (targetOpen: boolean, sourceOpen: boolean) => {
     const settings = await settingsManager.loadSettings();
     const data: AnnotateConfig = {
       'lazeMode': settings.featureSettings.lazyModeToggle || false,
@@ -125,13 +130,13 @@ const SettingPage = () => {
       'lemmatize': false,
     };
     if (targetOpen) {
-      sendMessageToContent('settings-annotateTargetLanguage', data);
+      handleTargetLanguageAnnotate(data)
     }else if(sourceOpen) {
       data.annotateType = settings.featureSettings.annotateSourceLanguageType;
-      sendMessageToContent('settings-annotateSourceLanguage', data);
+      handleSourceLanguageAnnotate(data)
     }else{
       // 还原
-      sendMessageToContent('settings-cleanAnnotate', {});
+      resetAnnotations();
     }
 
   };
@@ -241,22 +246,22 @@ const SettingPage = () => {
     const updateData: Partial<FeatureSettings> = { useBold: value };
     settingsManager.updateFeatureSettings(updateData);
   };
-
-  // 渲染设置页面的 JSX 结构
   return (
-    <div className="SettingPage">
+    <div className="SideBarSettingPage processed-dingdang-never" style={{padding:'10px',width:"90%"}}>
       <div>
-        <Divider orientation="left" style={{ marginTop: 0 }}>
-          基本设置
+        <Divider orientation="left" style={{ marginTop: 0 }} className={"processed-dingdang-never"}>
+          基 本 设 置
         </Divider>
         <Row gutter={8}>
-          <Col span={12}>
-            <SwitchCard isOn={autoToggle} description="自动开启" onToggle={() => setAndStoreAutoToggle(!autoToggle)} />
+          <Col span={11}>
+            <SwitchCard  isOn={autoToggle} description="自 动 开 启" onToggle={() => setAndStoreAutoToggle(!autoToggle)} />
           </Col>
-          <Col span={12}>
-            <SwitchCard isOn={lazyMode} description="懒狗模式" onToggle={() => setAndStoreLazyMode(!lazyMode)} />
+          <Col span={2} />
+          <Col span={11}>
+            <SwitchCard isOn={lazyMode} description="懒 狗 模 式" onToggle={() => setAndStoreLazyMode(!lazyMode)} />
           </Col>
         </Row>
+
         <Row>
           <SwitchCardWithDropdown
             isOn={annotateEnglish}
@@ -285,34 +290,34 @@ const SettingPage = () => {
           />
         </Row>
         <Divider orientation="left" style={{ marginTop: 6 }}>
-          更多设置
+          更 多 设 置
         </Divider>
         <Row>
           <InnerCard style={{ display: 'block', padding: '15px' }}>
             <Row style={{ marginBottom: '10px' }} gutter={10}>
               <Col>
                 <Checkbox onChange={e => setAndStoreUseBold(e.target.checked)} checked={useBold}>
-                  加粗
+                  加 粗
                 </Checkbox>
               </Col>
               <Col>
                 <Checkbox onChange={e => setAndStoreUseTextHighlight(e.target.checked)} checked={useTextHighlight}>
-                  文本高亮
+                  文 本 高 亮
                 </Checkbox>
               </Col>
               <Col>
                 <Checkbox onChange={e => setAndStoreUseUnderline(e.target.checked)} checked={useUnderline}>
-                  下划线
+                  下 划 线
                 </Checkbox>
               </Col>
             </Row>
             <Row>
               <Col span={6}>
-                <p>标注频率</p>
+                <p>标 注 频 率</p>
               </Col>
               <Col span={24}>
                 <Slider
-                  value={annotateFrequency}
+                  defaultValue={annotateFrequency}
                   onChange={value => setAndStoreAnnotateFrequency(value)}
                   disabled={false}
                 />

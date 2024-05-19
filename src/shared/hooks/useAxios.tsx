@@ -1,6 +1,4 @@
-import { useContext } from 'react';
-import axios, { AxiosRequestConfig } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { settingsManager } from '@src/shared/storages/SettingsManager';
 import { API_BASE_URL } from '@src/shared/constants';
 
@@ -11,7 +9,6 @@ export interface ResponseData<T = any> {
 }
 
 const useAxios = () => {
-  const navigate = useNavigate();
 
   const axiosInstance = axios.create({
     baseURL: API_BASE_URL,
@@ -29,11 +26,9 @@ const useAxios = () => {
       return response.data;
     },
     error => {
-      debugger;
       if (error.response.status === 401) {
         settingsManager.updateSettings({ token: '' });
-        navigate('/login');
-        console.error('登录已过期，请重新登录');
+        return Promise.reject(new Error('登录已过期，请重新登录'));
       }
       console.error(error.message || '网络请求异常，请稍后重试！');
       return Promise.reject(error);

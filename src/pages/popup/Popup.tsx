@@ -7,45 +7,53 @@ import BottomNav from '@src/shared/components/BottomNav/BottomNav';
 import TopNavbar from '@src/shared/components/TopNavbar/TopNavbar';
 import SettingsPage from '@src/shared/views/settings/SettingsPage';
 import LoginPage from '@src/shared/views/login/LoginPage';
-import { API_BASE_URL } from '@src/shared/constants';
-import WordBookCard from '@src/shared/components/WordBookCard/WordBookCard';
 import WordBookList from '@src/shared/views/wordbooklist/WordBookList';
-import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { settingsManager } from '@src/shared/storages/SettingsManager';
 
 const Popup = () => {
   // 定义头部和底部内容
   const headerContent = <TopNavbar />;
-  const footerContent = <BottomNav />;
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [isInitialRedirectDone, setInitialRedirectDone] = useState(false);
+  const [currentPage, setCurrentPage] = useState(null);
+
+  const footerContent = <BottomNav onNavItemClick={setCurrentPage} currentPage={currentPage} />;
 
   useEffect(() => {
-    if (!isInitialRedirectDone) {
-      settingsManager.loadSettings().then(settings => {
-        if (!settings.token && location.pathname !== '/login') {
-          navigate('/login');
-        } else if (settings.token && location.pathname !== '/') {
-          navigate('/');
-        }
-        setInitialRedirectDone(true);
-      });
+    settingsManager.loadSettings().then(settings => {
+      if (!settings.token) {
+        setCurrentPage('login');
+      } else {
+        setCurrentPage('settings');
+      }
+    });
+  }, []);
+
+  const handleLoginSuccess = () => {
+    setCurrentPage('settings');
+  };
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'settings':
+        return <SettingsPage />;
+      case 'stats':
+        return <div>这里显示统计内容</div>;
+      case 'history':
+        return <div>这里显示历史记录</div>;
+      case 'login':
+        return <LoginPage onLoginSuccess={handleLoginSuccess} />;
+      case 'todo':
+        return <div>这里显示待办事项</div>;
+      case 'wordbook':
+        return <WordBookList />;
+      default:
+        return <SettingsPage />;
     }
-  }, [navigate, location.pathname, isInitialRedirectDone]);
+  };
 
   return (
     <PopupLayout headerContent={headerContent} footerContent={footerContent}>
-      <Routes>
-        <Route path="/" element={<SettingsPage />} />
-        <Route path="/stats" element={<div>这里显示统计内容</div>} />
-        <Route path="/history" element={<div>这里显示历史记录</div>} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/todo" element={<LoginPage />} />
-        <Route path="/wordbook" element={<WordBookList />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      {renderPage()}
     </PopupLayout>
   );
 };

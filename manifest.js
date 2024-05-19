@@ -25,7 +25,6 @@ const manifest = {
     type: 'module',
   },
   action: {
-    default_popup: 'src/pages/popup/index.html',
     default_icon: 'icon-34.png',
   },
   icons: {
