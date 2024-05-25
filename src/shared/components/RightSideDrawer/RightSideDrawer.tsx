@@ -16,6 +16,7 @@ import WordBookList from '@src/shared/views/wordbooklist/WordBookList';
 import { settingsManager } from '@src/shared/storages/SettingsManager';
 import LoginPage from '@src/shared/views/login/LoginPage';
 import Tabs from '@src/shared/components/Tabs/Tabs';
+import AppInfoPage from '@src/shared/views/info/AppInfoPage';
 
 type RightSideDrawerProps = {
   visible: boolean;
@@ -58,7 +59,7 @@ const RightSideDrawer: React.FC<RightSideDrawerProps> = ({ visible, wordList, on
       case 'list':
         return <PageList wordList={wordList} />;
       case 'info':
-        return <div>Info Content</div>;
+        return <AppInfoPage/>;
       default:
         return <div>Select a category</div>;
     }
@@ -82,6 +83,7 @@ const RightSideDrawer: React.FC<RightSideDrawerProps> = ({ visible, wordList, on
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
+        zIndex: 9999999999,
       }}
       headerStyle={{
         backgroundColor: 'rgba(255, 255, 255, 0.3)',
@@ -90,6 +92,7 @@ const RightSideDrawer: React.FC<RightSideDrawerProps> = ({ visible, wordList, on
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        zIndex: 9999999999,
       }}
       extra={
         <Space><Tabs></Tabs></Space>
@@ -115,42 +118,42 @@ const RightSideDrawer: React.FC<RightSideDrawerProps> = ({ visible, wordList, on
           onClick={() => setActiveMenu('settings')}
         >
           <SettingOutlined style={{ fontSize: '24px' }} />
-          <div>设 置</div>
+          <div className={'processed-dingdang-never'}>设置</div>
         </div>
         <div
           style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}
           onClick={() => setActiveMenu('wordbook')}
         >
           <BookOutlined style={{ fontSize: '24px' }} />
-          <div>词 书</div>
+          <div className={'processed-dingdang-never'}>词书</div>
         </div>
-        <div
-          style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}
-          onClick={() => setActiveMenu('history')}
-        >
-          <HistoryOutlined style={{ fontSize: '24px' }} />
-          <div>历 史</div>
-        </div>
-        <div
-          style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}
-          onClick={() => setActiveMenu('statistics')}
-        >
-          <BarChartOutlined style={{ fontSize: '24px' }} />
-          <div>统 计</div>
-        </div>
+        {/*<div*/}
+        {/*  style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}*/}
+        {/*  onClick={() => setActiveMenu('history')}*/}
+        {/*>*/}
+        {/*  <HistoryOutlined style={{ fontSize: '24px' }} />*/}
+        {/*  <div>历 史</div>*/}
+        {/*</div>*/}
+        {/*<div*/}
+        {/*  style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}*/}
+        {/*  onClick={() => setActiveMenu('statistics')}*/}
+        {/*>*/}
+        {/*  <BarChartOutlined style={{ fontSize: '24px' }} />*/}
+        {/*  <div className={'processed-dingdang-never'}>统计</div>*/}
+        {/*</div>*/}
         <div
           style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}
           onClick={() => setActiveMenu('list')}
         >
           <UnorderedListOutlined style={{ fontSize: '24px' }} />
-          <div>清 单</div>
+          <div className={'processed-dingdang-never'}>清单</div>
         </div>
         <div
           style={{ textAlign: 'center', flex: 1, cursor: 'pointer', padding: '10px 0' }}
           onClick={() => setActiveMenu('info')}
         >
           <InfoCircleOutlined style={{ fontSize: '24px' }} />
-          <div>说 明</div>
+          <div className={'processed-dingdang-never'}>说明</div>
         </div>
       </div>
     </Drawer>

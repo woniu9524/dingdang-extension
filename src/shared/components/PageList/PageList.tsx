@@ -24,7 +24,7 @@ const PageList: React.FC<PageListProps> = ({ wordList: initialWordList }) => {
         updatedWordList.splice(index, 1);
         setWordList(updatedWordList);
       });
-      if (getRateValue(type)==5){
+      if (getRateValue(type)==6){
         wordsStorage.addStopWord(wordList[index].word)
       }
     }
@@ -32,9 +32,9 @@ const PageList: React.FC<PageListProps> = ({ wordList: initialWordList }) => {
 
   const getRateValue = (type: string) => {
     switch (type) {
-      case 'master':
-        return 5;
       case 'delete':
+        return 6;
+      case 'master':
         return 5;
       case 'strange':
         return 1;

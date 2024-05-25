@@ -289,31 +289,37 @@ const SettingPage = () => {
             onDropdownChange={handleWebsiteRulesDropdownChange}
           />
         </Row>
-        <Divider orientation="left" style={{ marginTop: 6 }}>
-          更 多 设 置
+        <Divider className={'processed-dingdang-never'} orientation="left" style={{ marginTop: 6 }}>
+
+          <span className={'processed-dingdang-never'}>更多设置</span>
         </Divider>
         <Row>
           <InnerCard style={{ display: 'block', padding: '15px' }}>
             <Row style={{ marginBottom: '10px' }} gutter={10}>
               <Col>
-                <Checkbox onChange={e => setAndStoreUseBold(e.target.checked)} checked={useBold}>
-                  加 粗
+                <Checkbox className={'processed-dingdang-never'} onChange={e => setAndStoreUseBold(e.target.checked)}
+                          checked={useBold}>
+
+                  <span className={'processed-dingdang-never'}>加粗</span>
                 </Checkbox>
               </Col>
               <Col>
-                <Checkbox onChange={e => setAndStoreUseTextHighlight(e.target.checked)} checked={useTextHighlight}>
-                  文 本 高 亮
+              <Checkbox className={'processed-dingdang-never'}
+                          onChange={e => setAndStoreUseTextHighlight(e.target.checked)} checked={useTextHighlight}>
+
+                  <span className={'processed-dingdang-never'}>文本高亮</span>
                 </Checkbox>
               </Col>
               <Col>
-                <Checkbox onChange={e => setAndStoreUseUnderline(e.target.checked)} checked={useUnderline}>
-                  下 划 线
+              <Checkbox onChange={e => setAndStoreUseUnderline(e.target.checked)} checked={useUnderline} className={'processed-dingdang-never'}>
+                  <span className={'processed-dingdang-never'}>下划线</span>
                 </Checkbox>
               </Col>
             </Row>
             <Row>
               <Col span={6}>
-                <p>标 注 频 率</p>
+                <p className={'processed-dingdang-never'}>标注频率</p>
+
               </Col>
               <Col span={24}>
                 <Slider

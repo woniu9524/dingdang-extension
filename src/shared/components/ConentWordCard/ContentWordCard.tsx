@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { CloseOutlined, SoundOutlined } from '@ant-design/icons';
+import { CloseOutlined, SoundOutlined, DeleteOutlined } from '@ant-design/icons'; // 引入删除图标
 import useExtensionApi from '@src/shared/hooks/useExtensionApi';
 import wordsStorage from '@src/shared/storages/WordsStorage';
+import { Button } from 'antd';
 
 interface ContentWordCardProps {
   word: string;
@@ -14,7 +15,6 @@ interface ContentWordCardProps {
 const ContentWordCard: React.FC<ContentWordCardProps> = ({ word, translation, example, exampleTranslation, onClose }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const { rateWord } = useExtensionApi();
-
 
   // 使用浏览器自带的发音
   const handlePronunciation = () => {
@@ -49,10 +49,12 @@ const ContentWordCard: React.FC<ContentWordCardProps> = ({ word, translation, ex
       // 关闭卡片
       onClose();
     })
-    if (grade === 5){
+    if (grade === 6){
       wordsStorage.addStopWord(word)
     }
   };
+
+
 
   const highlightWords = (text: string): JSX.Element => {
     const parts = text.split(/【|】/).map((part, index) =>
@@ -82,6 +84,12 @@ const ContentWordCard: React.FC<ContentWordCardProps> = ({ word, translation, ex
         <button className="word-card-button good-button" onClick={() => handleAction(3)}>良好</button>
         <button className="word-card-button easy-button" onClick={() => handleAction(4)}>容易</button>
         <button className="word-card-button master-button" onClick={() => handleAction(5)}>掌握</button>
+        <Button
+          type="text"
+          icon={<DeleteOutlined />}
+          onClick={()=>handleAction(6)}
+          aria-label="Delete"
+        />
       </div>
     </div>
   );

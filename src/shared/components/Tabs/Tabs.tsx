@@ -59,7 +59,7 @@ const Tabs: React.FC = () => {
         onMouseEnter={() => setHoveredButton('popupMode')}
         onMouseLeave={() => setHoveredButton(null)}
       >
-        弹窗模式
+        <span className={'processed-dingdang-never'}>弹窗模式</span>
       </button>
       <button
         style={{
@@ -71,7 +71,7 @@ const Tabs: React.FC = () => {
         onMouseEnter={() => setHoveredButton('sidebarMode')}
         onMouseLeave={() => setHoveredButton(null)}
       >
-        侧边栏模式
+        <span className={'processed-dingdang-never'}>侧边栏模式</span>
       </button>
     </div>
   );

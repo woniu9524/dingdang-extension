@@ -9,6 +9,7 @@ import SettingsPage from '@src/shared/views/settings/SettingsPage';
 import LoginPage from '@src/shared/views/login/LoginPage';
 import WordBookList from '@src/shared/views/wordbooklist/WordBookList';
 import { settingsManager } from '@src/shared/storages/SettingsManager';
+import AppInfoPage from '@src/shared/views/info/AppInfoPage';
 
 const Popup = () => {
   // 定义头部和底部内容
@@ -42,8 +43,8 @@ const Popup = () => {
         return <div>这里显示历史记录</div>;
       case 'login':
         return <LoginPage onLoginSuccess={handleLoginSuccess} />;
-      case 'todo':
-        return <div>这里显示待办事项</div>;
+      case 'info':
+        return <AppInfoPage/>;
       case 'wordbook':
         return <WordBookList />;
       default:

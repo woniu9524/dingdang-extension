@@ -11,8 +11,8 @@ import './BottomNav.css';
 const BottomNav = ({ onNavItemClick, currentPage }) => {
   const navItems = [
     { key: 'settings', icon: <SettingOutlined />, text: '设置' },
-    { key: 'stats', icon: <BarChartOutlined />, text: '统计' },
-    { key: 'history', icon: <HistoryOutlined />, text: '历史' },
+    // { key: 'stats', icon: <BarChartOutlined />, text: '统计' },
+    /*{ key: 'history', icon: <HistoryOutlined />, text: '历史' },*/
     { key: 'wordbook', icon: <BookOutlined />, text: '词书' },
     { key: 'info', icon: <BulbOutlined />, text: '说明' },
   ];
