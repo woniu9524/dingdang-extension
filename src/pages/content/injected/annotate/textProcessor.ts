@@ -74,7 +74,7 @@ export async function handleAnnotate(settings: AnnotateConfig, isTargetLanguage:
     const text = textNode.textContent;
     if (!text) return;
 
-    const shouldTokenize = ['en'].includes(isTargetLanguage ? settings.targetLanguage : settings.sourceLanguage);
+    const shouldTokenize = ['en','fr'].includes(isTargetLanguage ? settings.targetLanguage : settings.sourceLanguage);
     let replacedText;
 
     if (shouldTokenize) {
@@ -96,11 +96,13 @@ export async function handleAnnotate(settings: AnnotateConfig, isTargetLanguage:
 
 // 处理目标语言注释
 export async function handleTargetLanguageAnnotate(settings: AnnotateConfig): Promise<void> {
+  console.log('handleTargetLanguageAnnotate');
   return handleAnnotate(settings, true);
 }
 
 // 处理源语言注释
 export async function handleSourceLanguageAnnotate(settings: AnnotateConfig): Promise<void> {
+  console.log('handleSourceLanguageAnnotate');
   return handleAnnotate(settings, false);
 }
 

@@ -1,12 +1,7 @@
 {
-  "name": "chrome-extension-boilerplate-react-vite",
+  "name": "DingDuang",
   "version": "0.0.1",
-  "description": "chrome extension boilerplate",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite.git"
-  },
+  "description": "用来在浏览网页之余学习单词的Chrome 插件",
   "scripts": {
     "build": "tsc --noEmit && vite build",
     "build:firefox": "tsc --noEmit && cross-env __FIREFOX__=true vite build",

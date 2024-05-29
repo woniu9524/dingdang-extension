@@ -12,10 +12,10 @@ const manifest = {
    * if you want to support multiple languages, you can use the following reference
    * https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/Internationalization
    */
-  name: '__MSG_extensionName__',
+  name: '叮当单词',
   version: packageJson.version,
-  description: '__MSG_extensionDescription__',
-  permissions: ['storage', 'activeTab', 'webNavigation',  'http://*/*', 'https://*/*'],
+  description: '用来在浏览网页之余学习单词的Chrome 插件',
+  permissions: ['storage', 'activeTab',  'http://*/*', 'https://*/*'],
   side_panel: {
     default_path: 'src/pages/sidepanel/index.html',
   },
@@ -32,7 +32,7 @@ const manifest = {
   },
   content_scripts: [
     {
-      matches: ['http://*/*', 'https://*/*', '<all_urls>'],
+      matches: ['http://*/*', 'https://*/*'],
       js: ['src/pages/contentInjected/index.js'],
       // KEY for cache invalidation
       css: ['assets/css/contentStyle<KEY>.chunk.css', 'assets/css/annotate.chunk.css'],

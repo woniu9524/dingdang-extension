@@ -2,7 +2,6 @@
 export function getCurrentDomain(): Promise<string> {
   return new Promise((resolve, reject) => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      console.log('tabs', tabs);
       const currentTab = tabs[0];
       if (currentTab && currentTab.url) {
         try {

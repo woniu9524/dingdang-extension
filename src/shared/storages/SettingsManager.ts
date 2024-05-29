@@ -38,7 +38,7 @@ class SettingsManager {
         openNewPageAutoToggle: false,
         lazyModeToggle: false,
         annotateTargetLanguageToggle: false,
-        annotateTargetLanguageType: '',
+        annotateTargetLanguageType: 'annotateOnly',
         annotateSourceLanguageToggle: false,
         annotateSourceLanguageType: 'topEnglish',
         websiteRules: [],
@@ -65,13 +65,11 @@ class SettingsManager {
 
   async loadSettings(): Promise<UserSettings> {
     const settings = await this.settingsStorage.get();
-    console.log('Settings loaded:', settings);
     return settings;
   }
 
   async saveSettings(newSettings: UserSettings): Promise<void> {
     await this.settingsStorage.set(newSettings);
-    console.log('Settings saved!');
   }
 
   async updateSettings(update: Partial<UserSettings>): Promise<void> {

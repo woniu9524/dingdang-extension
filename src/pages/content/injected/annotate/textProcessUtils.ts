@@ -1,4 +1,4 @@
-import nlp from 'compromise';
+//import nlp from 'compromise';
 
 
 // 定义TextNodeCallback类型，用于描述处理文本节点的回调函数
@@ -85,26 +85,26 @@ export function tokenizeText(text: string, language: string, lemmatized: boolean
   lemmatized = true;
   const words = text.split(/\s+/g);
   // 如果需要词形还原，且是英语
-  if (language === '英语' && lemmatized) {
-    // 词形还原结果数组
-    const lemmatizedResults = words.map(word => {
-      // 将单词转换为Compromise文档对象
-      const wordDoc = nlp(word);
-      // 尝试还原动词到其不定式
-      let lemma = wordDoc.verbs().toInfinitive().out('text');
-      // 如果结果未改变，尝试将名词还原到单数形式
-      if (lemma === word) {
-        lemma = wordDoc.nouns().toSingular().out('text');
-      }
-      // 如果还是没有变化，就使用原词
-      if (lemma === word) {
-        lemma = word; // 如果词未变，保留原样
-      }
-      return { original: word, lemmatized: lemma };
-    });
-
-    return lemmatizedResults;
-  }
+  // if (language === '英语' && lemmatized) {
+  //   // 词形还原结果数组
+  //   const lemmatizedResults = words.map(word => {
+  //     // 将单词转换为Compromise文档对象
+  //     const wordDoc = nlp(word);
+  //     // 尝试还原动词到其不定式
+  //     let lemma = wordDoc.verbs().toInfinitive().out('text');
+  //     // 如果结果未改变，尝试将名词还原到单数形式
+  //     if (lemma === word) {
+  //       lemma = wordDoc.nouns().toSingular().out('text');
+  //     }
+  //     // 如果还是没有变化，就使用原词
+  //     if (lemma === word) {
+  //       lemma = word; // 如果词未变，保留原样
+  //     }
+  //     return { original: word, lemmatized: lemma };
+  //   });
+  //
+  //   return lemmatizedResults;
+  // }
   // 对于不需要词形还原的情况，或不是英语，返回原始单词
   return words.map(word => ({ original: word, lemmatized: word }));
 }

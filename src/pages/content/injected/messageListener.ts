@@ -19,6 +19,7 @@ const requestHandlers = {
   },
   'settings-annotateSourceLanguage': async (data) => {
     // 标注中文
+    console.log('settings-annotateSourceLanguage', data);
     await handleSourceLanguageAnnotate(data);
     return {};
   },

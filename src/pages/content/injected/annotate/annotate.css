@@ -98,7 +98,7 @@
 
 .word-card {
     position: absolute;
-    width: 360px;
+    width: 400px;
     background: #fffae5; /* 淡黄色背景 */
     border-radius: 8px;
     overflow: hidden;
