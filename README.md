@@ -35,8 +35,8 @@
   - 提供一个小程序，方便用户在手机上学习和复习。
   - 小程序：[https://github.com/woniu9524/dingdang-miniprogram](https://github.com/woniu9524/dingdang-miniprogram)
 
-## Installation <a name="installation"></a>
-- chrome浏览器商店安装
+## 下载 <a name="installation"></a>
+- [chrome浏览器商店安装](https://chromewebstore.google.com/detail/%E5%8F%AE%E5%BD%93%E5%8D%95%E8%AF%8D/clifanofjpkhkekkfkdcnhiiccobepki?hl=zh-CN)
 - edge浏览器商店安装
 - firefox浏览器商店安装
 - 直接下载安装
