@@ -11,10 +11,14 @@ import { cleanTranslation } from '@src/shared/utils/ChromExtendTool';
 
 const LoginPage = ({ onLoginSuccess }) => {
   const generateScene = () => {
-    const timestamp = Date.now();
-    const randomPart = Math.floor(Math.random() * 100000);
-    return `${timestamp}${randomPart}`;
+    const timestamp = Date.now().toString();
+    const randomPart = Math.floor(Math.random() * 1000);
+    // 截取 timestamp 的后 6 位
+    const shortTimestamp = timestamp.slice(-6);
+
+    return `${shortTimestamp}${randomPart}`;
   };
+
 
   // Update to use a setter for scene state
   const [scene, setScene] = useState(generateScene);

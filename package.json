@@ -1,6 +1,6 @@
 {
   "name": "DingDuang",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "用来在浏览网页之余学习单词的Chrome 插件",
   "scripts": {
     "build": "tsc --noEmit && vite build",
@@ -25,6 +25,7 @@
     "axios": "^1.6.8",
     "compromise": "^14.13.0",
     "construct-style-sheets-polyfill": "3.1.0",
+    "langchain": "^0.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "^6.23.0",
