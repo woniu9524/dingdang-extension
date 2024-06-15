@@ -20,6 +20,7 @@
 
 这是一个 Chrome 扩展，用于在浏览器阅读小说文章时对所学的单词进行标记。
 > 目标是帮助用户在阅读小说文章时顺带背单词。
+> 使用教程：[https://www.bilibili.com/video/BV1fpVqefEYt/](https://www.bilibili.com/video/BV1fpVqefEYt/)
 
 ## 功能 <a name="功能"></a>
 - 中文标注
