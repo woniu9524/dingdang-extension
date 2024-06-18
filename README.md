@@ -50,7 +50,7 @@
 
 ## 安装 <a name="安装"></a>
 - [Chrome 浏览器商店安装](https://chromewebstore.google.com/detail/%E5%8F%AE%E5%BD%93%E5%8D%95%E8%AF%8D/clifanofjpkhkekkfkdcnhiiccobepki?hl=zh-CN)
-- Edge 浏览器商店安装
+- [Edge 浏览器商店安装](https://microsoftedge.microsoft.com/addons/detail/%E5%8F%AE%E5%BD%93%E5%8D%95%E8%AF%8D/pgdgdccbkhlmmmeploafkgbcfbdcpoho)
 - [直接下载安装](https://github.com/woniu9524/dingdang-extension/releases/)
 
 ---
